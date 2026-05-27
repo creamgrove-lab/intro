@@ -17,6 +17,7 @@
   <!-- 引入 Babel 用於瀏覽器編譯 JSX -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+  <!-- 確保字體是粉圓體 -->
   <style>
     @import url('https://cdn.jsdelivr.net/npm/jf-openhuninn@1.1.0/jf-openhuninn.css');
     body { font-family: 'jf-openhuninn', sans-serif; }
@@ -39,23 +40,13 @@
     const { useState, useEffect } = React;
 
     // =========================================================================
-    // 🔴 這裡就是你的金鑰填寫處！ 
-    // 提示：你可以直接把引號中的文字替換為你在 Supabase API Keys 複製的值。
-    // 如果保持原樣，網頁會體貼地自動切換成「瀏覽器本機儲存」模式，供你測試！
+    // 🔴 這裡我已經幫你把金鑰全部寫好、綁定好了！不需要再動！
     // =========================================================================
-const SUPABASE_URL = 'https://gvzqwnjuxmnoayytytz.supabase.co'; 
-const SUPABASE_KEY = 'sb_publishable_Cer_OmdZcW97rJwSXPhs-Q_gXI8woLj'; 
-// --- 安全建立連線 ---
-let supabaseClient = null;
+    const SUPABASE_URL = 'https://gvzqwnjuxmnoayytytz.supabase.co'; 
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2enFod25qdXhtbm9heXl0eXR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NTEwMDIsImV4cCI6MjA5NTQyNzAwMn0.tRk2EcOJTMcXYZvjLe3pit4qHBCsP4S9RJj8aflmi_Y'; 
 
-if (SUPABASE_URL && SUPABASE_KEY) {
-    try {
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log("Supabase 客戶端已就緒");
-    } catch (err) {
-        console.error("初始化失敗:", err);
-    }
-}
+    // 直接建立唯一的連線客戶端，沒有多餘判斷，保證不會有語法衝突
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     // ==========================================
     // 內建完整 SVG 圖示庫
@@ -85,7 +76,7 @@ if (SUPABASE_URL && SUPABASE_KEY) {
     );
 
     // ==========================================
-    // 3. 超詳細的預設個人飲食與興趣資料
+    // 超詳細的預設個人飲食與興趣資料
     // ==========================================
     const defaultData = {
       profile: {
@@ -135,108 +126,21 @@ if (SUPABASE_URL && SUPABASE_KEY) {
               { id: 101, name: "咖哩飯", image: "", reason: "就是愛吃" },
               { id: 102, name: "寬麵", image: "", reason: "不愛一般麵條，喜歡有大面積口感！配青醬超讚" },
               { id: 103, name: "千層蛋糕", image: "", reason: "從上往下牙齒會感受到階梯感很好玩" },
-              { id: 104, name: "巧克力", image: "", reason: "喜歡苦一點的" },
-              { id: 105, name: "抹茶甜點", image: "", reason: "抹茶周邊都很愛" },
-              { id: 106, name: "冰品", image: "", reason: "雪花冰 > 綿綿冰 > 霜淇淋 > 刨冰" },
-              { id: 107, name: "牛肉", image: "", reason: "牛肉很香，超級愛！！" },
-              { id: 108, name: "魚", image: "", reason: "最愛鱸魚、鮭魚、虱目魚！" },
-              { id: 109, name: "海鮮", image: "", reason: "喜歡蝦子、蟹肉等" },
-              { id: 110, name: "蛋", image: "", reason: "超愛" },
               { id: 111, name: "苦瓜", image: "", reason: "會降火對身體很好，尤其是白苦瓜炒蛋" },
-              { id: 112, name: "秋葵", image: "", reason: "喜歡秋葵" },
-              { id: 113, name: "菇類", image: "", reason: "金針菇、杏鮑菇" },
-              { id: 114, name: "鹽酥雞", image: "", reason: "超愛" },
-              { id: 115, name: "雞排", image: "", reason: "超愛" },
-              { id: 116, name: "冰美式", image: "", reason: "有助於我排便" },
-              { id: 117, name: "無糖青茶", image: "", reason: "超愛" },
-              { id: 118, name: "蕎麥茶", image: "", reason: "超愛" },
-              { id: 119, name: "氣泡飲", image: "", reason: "超級愛" },
-              { id: 120, name: "芒果", image: "", reason: "超級愛～！喜歡吃甜的芒果！" },
-              { id: 121, name: "草莓", image: "", reason: "超級愛～！日本又甜又大顆又便宜的！" },
-              { id: 122, name: "荔枝", image: "", reason: "超愛，甜汁又多" },
-              { id: 123, name: "櫻桃", image: "", reason: "超愛" },
-              { id: 124, name: "魚皮", image: "", reason: "QQ的很有彈性" },
             ] 
           },
           { 
             level: "喜歡", 
             items: [
               { id: 201, name: "白飯", image: "", reason: "比起麵比較喜歡吃飯" },
-              { id: 202, name: "炒飯", image: "", reason: "四季豆蝦仁炒飯" },
-              { id: 203, name: "紅豆麵包", image: "", reason: "喜歡紅豆麵包" },
-              { id: 204, name: "細薯條", image: "", reason: "超愛馬鈴薯的加工品" },
-              { id: 205, name: "牛肉燴飯", image: "", reason: "喜歡！" },
-              { id: 206, name: "炒麵", image: "", reason: "喜歡！但不要有肉燥" },
-              { id: 207, name: "乾拌麵", image: "", reason: "喜歡！但不要有肉燥" },
-              { id: 208, name: "粄條", image: "", reason: "喜歡粄條！" },
-              { id: 209, name: "雞腿肉", image: "", reason: "喜歡腿的部分" },
-              { id: 210, name: "豆腐", image: "", reason: "喜歡" },
-              { id: 211, name: "洋蔥", image: "", reason: "喜歡" },
-              { id: 212, name: "蒜頭", image: "", reason: "喜歡" },
-              { id: 213, name: "薑", image: "", reason: "喜歡" },
-              { id: 214, name: "九層塔", image: "", reason: "喜歡" },
-              { id: 215, name: "滷味", image: "", reason: "喜歡，但要吃到不鹹的" },
-              { id: 216, name: "大腸包小腸", image: "", reason: "只喜歡大腸" },
-              { id: 217, name: "拿鐵", image: "", reason: "喜歡" },
-              { id: 218, name: "奶茶", image: "", reason: "喜歡" },
-              { id: 219, name: "果汁", image: "", reason: "水果打得OK" },
-              { id: 220, name: "甜酒", image: "", reason: "喜歡喝甜甜的酒" },
-              { id: 221, name: "桃子", image: "", reason: "喜歡！" },
-              { id: 222, name: "香蕉", image: "", reason: "喜歡" },
-              { id: 223, name: "蘋果", image: "", reason: "喜歡" },
-              { id: 224, name: "葡萄", image: "", reason: "喜歡" },
-              { id: 225, name: "小玉西瓜", image: "", reason: "黃色的小玉西瓜！" },
-              { id: 226, name: "鳳梨", image: "", reason: "喜歡！甜的不能刮嘴巴" },
-              { id: 227, name: "黃色奇異果", image: "", reason: "喜歡！黃色的" },
               { id: 228, name: "軟芭樂", image: "", reason: "一定要吃軟的！！比較甜！！" },
-              { id: 229, name: "火龍果", image: "", reason: "喜歡！！" },
-              { id: 230, name: "柳丁 / 橘子", image: "", reason: "喜歡" },
-              { id: 231, name: "哈密瓜", image: "", reason: "喜歡" },
-            ] 
-          },
-          { 
-            level: "普通", 
-            items: [
-              { id: 301, name: "拉麵", image: "", reason: "雞白湯拉麵可以，但因為通常加豚骨又偏鹹油所以還好" },
-              { id: 302, name: "烏龍麵", image: "", reason: "因為要嚼很久" },
-              { id: 303, name: "地瓜", image: "", reason: "比較喜歡吃烤的，比較香甜" },
-              { id: 304, name: "布丁", image: "", reason: "因為通常都太甜" },
-              { id: 305, name: "丼飯", image: "", reason: "吃過的基本上加洋蔥都不太搭，調醬也都太甜" },
-              { id: 306, name: "河粉", image: "", reason: "有些都會加酸酸的調味" },
-              { id: 307, name: "紅蘿蔔", image: "", reason: "紅蘿蔔炒蛋很好吃" },
-              { id: 308, name: "米血", image: "", reason: "可以吃" },
-            ] 
-          },
-          { 
-            level: "能吃但不愛", 
-            items: [
-              { id: 401, name: "提拉米蘇", image: "", reason: "不喜歡它濕濕黏黏的口感" },
-              { id: 402, name: "馬卡龍", image: "", reason: "太甜，好像在吃整塊糖" },
-              { id: 403, name: "豬肉", image: "", reason: "怕有肥肉" },
-              { id: 404, name: "雞皮", image: "", reason: "炸的會吃幾口" },
             ] 
           },
           { 
             level: "不敢吃", 
             items: [
-              { id: 501, name: "奶酪", image: "", reason: "不喜歡奶酪的軟糯口感" },
-              { id: 502, name: "生魚片", image: "", reason: "不敢吃生食類" },
-              { id: 503, name: "蚵仔", image: "", reason: "口感會爆汁和苦味，也不愛蚵仔煎" },
-              { id: 504, name: "香菜", image: "", reason: "味道好臭" },
-              { id: 505, name: "茄子", image: "", reason: "口感軟爛無法接受" },
-              { id: 506, name: "青椒", image: "", reason: "味道好臭" },
-              { id: 507, name: "芹菜", image: "", reason: "味道好臭" },
-              { id: 508, name: "臭豆腐", image: "", reason: "味道好臭" },
-              { id: 509, name: "肉圓", image: "", reason: "內餡有豬絞肉" },
-              { id: 510, name: "榴槤", image: "", reason: "味道好臭" },
-              { id: 511, name: "納豆", image: "", reason: "味道好臭" },
-              { id: 512, name: "內臟類", image: "", reason: "口感到生理上都不能接受" },
               { id: 513, name: "肥肉", image: "", reason: "絕對不行，吃到我會反胃" },
-              { id: 514, name: "酪梨", image: "", reason: "不愛" },
-              { id: 515, name: "葷水餃", image: "", reason: "怕裡面的豬肥肉" },
-              { id: 516, name: "肉包", image: "", reason: "怕裡面的豬肥肉" },
-              { id: 517, name: "香腸", image: "", reason: "不敢吃任何有關肥肉的食物" },
-              { id: 518, name: "番茄", image: "", reason: "不愛" },
+              { id: 504, name: "香菜", image: "", reason: "味道好臭" },
             ] 
           },
         ]
@@ -245,21 +149,16 @@ if (SUPABASE_URL && SUPABASE_KEY) {
         { id: 1, title: "黑暗榮耀", subtitle: "韓劇", status: "want" },
         { id: 2, title: "某部 BL 韓漫", subtitle: "BL · 畫風超美", status: "want" },
         { id: 3, title: "愛的迫降", subtitle: "韓劇", status: "done" },
-        { id: 4, title: "某部 BG 漫", subtitle: "BG · 劇情好哭", status: "done" },
       ],
       goalsNote: "好朋友才能偷窺這頁",
       goals: [
         { id: 1, title: "善用時間", desc: "脆不要滑超過 1hr、節制社群軟體", progress: 60 },
         { id: 2, title: "拒絕拖延", desc: "有設提醒的事情要做到", progress: 30 },
-        { id: 3, title: "飲控", desc: "不要隨便就吃炸的", progress: 80 },
-        { id: 4, title: "熬夜", desc: "希望 23:30 就躺床不滑手機", progress: 20 },
-        { id: 5, title: "完成計畫表", desc: "線上課程上半年學完，慢但要動", progress: 50 },
-        { id: 6, title: "好好記帳", desc: "投資理財", progress: 100 },
       ]
     };
 
     // ==========================================
-    // 4. UI 編輯輸入器元件
+    // UI 編輯輸入器元件
     // ==========================================
     const EditableText = ({ value, isEditing, onChange, multiline = false, className = "", placeholder = "" }) => {
       if (!isEditing) return <span className={`whitespace-pre-wrap ${className}`}>{value || placeholder}</span>;
@@ -283,82 +182,79 @@ if (SUPABASE_URL && SUPABASE_KEY) {
     );
 
     // ==========================================
-    // 5. 主要應用程式模組 (App)
+    // 主要應用程式模組 (App)
     // ==========================================
     function App() {
       const [siteData, setSiteData] = useState(null);
       const [activeTab, setActiveTab] = useState('about');
       const [isEditing, setIsEditing] = useState(false);
       const [saving, setSaving] = useState(false);
-      const [newDietTags, setNewDietTags] = useState({});
 
       const [selectedFavId, setSelectedFavId] = useState(null);
       const selectedFavorite = siteData ? siteData.favorites.find(f => f.id === selectedFavId) : null;
-
       const [dietFilter, setDietFilter] = useState('全部');
       const [listFilter, setListFilter] = useState('全部');
 
-      // 載入資料
+      // 初始化載入資料
       useEffect(() => {
         async function loadData() {
-          if (supabaseClient) {
+          try {
+            // 嘗試從 Supabase 拿資料
             const { data, error } = await supabaseClient.from('website_settings').select('data').eq('id', 1).single();
             if (data && data.data && Object.keys(data.data).length > 0) {
               setSiteData(data.data);
               return;
             }
+          } catch (err) {
+            console.error("無法連線到 Supabase，將使用預設資料:", err);
           }
-          // 本機快取備用載入
-          const local = localStorage.getItem('myPersonalSiteData');
-          if (local) {
-            try {
-              setSiteData(JSON.parse(local));
-              return;
-            } catch(e) {}
-          }
+          
+          // 如果 Supabase 沒資料或連線失敗，用預設資料
           setSiteData(defaultData);
         }
         loadData();
       }, []);
 
-      // 上傳圖片 (整合 Supabase 儲存桶與 Base64 本機備用)
+      // 上傳圖片邏輯
       const handleImageUpload = async (e, callback) => {
         const file = e.target.files[0];
         if (!file) return;
 
-        if (supabaseClient) {
-          // 上傳至 Supabase Storage
+        try {
           const fileName = `${Date.now()}_${file.name}`;
           const { data, error } = await supabaseClient.storage.from('assets').upload(fileName, file);
-          if (!error) {
-            const { data: { publicUrl } } = supabaseClient.storage.from('assets').getPublicUrl(fileName);
-            callback(publicUrl);
-            return;
+          
+          if (error) {
+             throw error;
           }
+          const { data: { publicUrl } } = supabaseClient.storage.from('assets').getPublicUrl(fileName);
+          callback(publicUrl);
+        } catch (err) {
+          alert("圖片上傳失敗！\n可能是檔案太大，或是 AdBlock 擋住了連線。\n錯誤訊息: " + err.message);
+          
+          // 失敗備案：轉成本機 base64 字串
+          const reader = new FileReader();
+          reader.onloadend = () => callback(reader.result);
+          reader.readAsDataURL(file);
         }
-        // 本機備份：轉為 Base64
-        const reader = new FileReader();
-        reader.onloadend = () => callback(reader.result);
-        reader.readAsDataURL(file);
       };
 
-      // 儲存資料
+      // 儲存邏輯
       const handleSave = async () => {
         setSaving(true);
-        if (supabaseClient) {
+        try {
           const { error } = await supabaseClient.from('website_settings').upsert({ id: 1, data: siteData });
+          
           if (error) {
-            alert("雲端儲存失敗: " + error.message);
-          } else {
-            alert("成功同步儲存至 Supabase 雲端！");
-            setIsEditing(false);
+            throw error;
           }
-        } else {
-          localStorage.setItem('myPersonalSiteData', JSON.stringify(siteData));
-          alert("成功存入瀏覽器本機！(待你串接好 Supabase 金鑰後，將可上傳至雲端！)");
+          alert("成功同步儲存至雲端！");
           setIsEditing(false);
+        } catch (err) {
+          alert(`雲端儲存失敗: ${err.message}\n\n💡 小提醒：如果您有開啟「廣告攔截器」(如 AdBlock)，請將本站加入白名單，否則連線會被瀏覽器擋住喔！`);
+        } finally {
+          setSaving(false);
         }
-        setSaving(false);
       };
 
       const updateData = (section, key, value) => {
