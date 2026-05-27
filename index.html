@@ -43,14 +43,18 @@
     // 提示：你可以直接把引號中的文字替換為你在 Supabase API Keys 複製的值。
     // 如果保持原樣，網頁會體貼地自動切換成「瀏覽器本機儲存」模式，供你測試！
     // =========================================================================
-    const SUPABASE_URL = 'https://gvzqwnjuxmnoayytytz.supabase.co'; 
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2enFod25qdXhtbm9heXl0eXR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NTEwMDIsImV4cCI6MjA5NTQyNzAwMn0.tRk2EcOJTMcXYZvjLe3pit4qHBCsP4S9RJj8aflmi_Y'; 
+const SUPABASE_URL = 'https://gvzqwnjuxmnoayytytz.supabase.co'; 
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2enFod25qdXhtbm9heXl0eXR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NTEwMDIsImV4cCI6MjA5NTQyNzAwMn0.tRk2EcOJTMcXYZvjLe3pit4qHBCsP4S9RJj8aflmi_Y'; 
+// --- 安全建立連線 ---
+let supabaseClient = null;
 
-    // 安全建立 Supabase 客端端，防止未設定時當機
-    let supabaseClient = null;
-    // 直接檢查有沒有填寫網址與金鑰即可
 if (SUPABASE_URL && SUPABASE_KEY) {
-    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    try {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        console.log("Supabase 連線成功！");
+    } catch (err) {
+        console.error("Supabase 初始化失敗:", err);
+    }
 }
 
     // ==========================================
