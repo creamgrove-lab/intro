@@ -44,16 +44,16 @@
     // 如果保持原樣，網頁會體貼地自動切換成「瀏覽器本機儲存」模式，供你測試！
     // =========================================================================
 const SUPABASE_URL = 'https://gvzqwnjuxmnoayytytz.supabase.co'; 
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd2enFod25qdXhtbm9heXl0eXR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk4NTEwMDIsImV4cCI6MjA5NTQyNzAwMn0.tRk2EcOJTMcXYZvjLe3pit4qHBCsP4S9RJj8aflmi_Y'; 
+const SUPABASE_KEY = 'sb_publishable_Cer_OmdZcW97rJwSXPhs-Q_gXI8woLj'; 
 // --- 安全建立連線 ---
 let supabaseClient = null;
 
 if (SUPABASE_URL && SUPABASE_KEY) {
     try {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log("Supabase 連線成功！");
+        console.log("Supabase 客戶端已就緒");
     } catch (err) {
-        console.error("Supabase 初始化失敗:", err);
+        console.error("初始化失敗:", err);
     }
 }
 
